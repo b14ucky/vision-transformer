@@ -1,7 +1,7 @@
 # Vision Transformer
 
 This project is my PyTorch implementation of a Vision Transformer (ViT) model, proposed in a research paper "[An Image Is Worth 16x16 Words: Transformers For Image Recognition At Scale](https://arxiv.org/abs/2010.11929)".\
-ViTs divide images into a sequence of patches and apply transformer architectures---originally designed for text---to image recognition.
+ViTs divide images into a sequence of patches and apply transformer architectures-originally designed for text-to image recognition.
 
 ## Table of Contents
 - [Vision Transformer](#vision-transformer)
@@ -26,17 +26,18 @@ The goal of this project was to implement a Vision Transformer model for classif
 ## Model Architecture
 
 Transformers take a sequence as an input so to feed it an image it is divided into patches, to achieve this I used `nn.Unfold` class. Below is an example of an image divided into patches:
-![patch division visualisation](https://github.com/b14ucky/vision-transformer/tree/main/images/patch-div-vis.png)
+![patch division visualisation](/images/patch-div-vis.png)
 Each patch is then embedded using linear projection. Next a class token is prepended to the sequence, its purpose is to gather information about the image. Positional embeddings are added to both the patches and the class token to provide information about their original position in the image. The sequence is then passed through transformer encoders, and lastly the class token is processed through an MLP to obtain the final output.
 
 ## Variations
 
-Due to the small dataset size (~85k samples in the training split and ~25k for validation) and limited computational resources, I created custom model variations. Initially, I attempted to train the smallest model from the paper---ViT-B---but after 2 epochs with no decrease in loss, I decided to develop my own models. The parameters for these custom models are shown below:
+Due to the small dataset size (~85k samples in the training split and ~25k for validation) and limited computational resources, I created custom model variations. Initially, I attempted to train the smallest model from the paper-ViT-B-but after 2 epochs with no decrease in loss, I decided to develop my own models. The parameters for these custom models are shown below:
 |    Model     | Layers | Embedding size | MLP size | Heads |
 | :----------: | :----: | :------------: | :------: | :---: |
 |   ViT-Tiny   |   12   |      192       |   768    |   4   |
 |  ViT-Small   |   12   |      384       |   1536   |   6   |
 | ViT-Small-12 |   12   |      384       |   1536   |  12   |
+
 The pre-trained models can be found at [Kaggle](https://www.kaggle.com/models/b14ucky/vision-transformer).
 
 ## Training
@@ -46,11 +47,13 @@ The models were trained using 2x T4 GPUs available on **Kaggle**. To fully utili
 ## Performance
 
 After training, I evaluated all three models on the test dataset to compare their accuracy. The results are presented in the table below:
+
 |  Model   |  Loss   | Accuracy |
 | :------: | :-----: | :------: |
 |  ViT-T   | 6.13117 |  38.68%  |
 |  ViT-S   | 7.09262 |  41.46%  |
 | ViT-S-12 | 7.22002 |  41.21%  |
+
 The results indicate that all three models are overfitting. This is likely due to the dataset's relatively small size, as transformers generally perform better with larger datasets. Despite this, I am quite satisfied with the results. The ViT-S model was able to correctly classify photos of several fruits and vegetables that I found in my kitchen.
 
 ## Future Improvements
