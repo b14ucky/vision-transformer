@@ -11,6 +11,7 @@ ViTs divide images into a sequence of patches and apply transformer architecture
   - [Variations](#variations)
   - [Training](#training)
   - [Performance](#performance)
+  - [Attention Map](#attention-map)
   - [Future Improvements](#future-improvements)
   - [Usage](#usage)
     - [Locally](#locally)
@@ -54,14 +55,18 @@ After training, I evaluated all three models on the test dataset to compare thei
 |  ViT-S   | 7.09262 |  41.46%  |
 | ViT-S-12 | 7.22002 |  41.21%  |
 
-The results indicate that all three models are overfitting. This is likely due to the dataset's relatively small size, as transformers generally perform better with larger datasets. Despite this, I am quite satisfied with the results. The ViT-S model was able to correctly classify photos of several fruits and vegetables that I found in my kitchen.
+The results indicate that all three models are overfitting. This is likely due to the dataset's relatively small size, as transformers generally perform better with larger datasets. Despite this, I am quite satisfied with the results. The ViT-S model was able to correctly classify photos of several fruits and vegetables that I found in my kitchen-completely new samples that were not part of the test dataset. This shows some degree of robustness in real-world scenarios.
+
+## Attention Map
+
+To understand which parts of an image contribute the most to a model's decision, I added a function that generates an attention map for a given model and applies it to the image. Below are the attention maps of the same image for each of the models:
+![attention maps](/images/attention-maps.png)
+
 
 ## Future Improvements
 
 1. I want to investigate why the loss increases even as accuracy improves.
 2. Adding more image augmentation techniques may help improve generalization and prevent the models from overfitting.
-3. I also plan to add functionality to visualize attention maps, which would help me understand how the model processes different parts of the image---completely new samples that were not part of the test dataset. This shows some degree of robustness in real-world scenarios.
-
 ## Usage
 
 ### Locally
